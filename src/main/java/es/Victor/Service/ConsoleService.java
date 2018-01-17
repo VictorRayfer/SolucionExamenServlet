@@ -1,5 +1,7 @@
 package es.Victor.Service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import es.Victor.Assembler.ConsoleAssembler;
@@ -7,9 +9,9 @@ import es.Victor.Model.Console;
 import es.Victor.Repository.ConsoleRepository;
 
 public class ConsoleService {
-	
+
 	private ConsoleRepository repository = new ConsoleRepository();
-	
+
 	public void createNewConsoleFromRequest(HttpServletRequest req) {
 		Console console = ConsoleAssembler.assembleConsoleFrom(req);
 		insertOrUpdate(console);
@@ -24,6 +26,11 @@ public class ConsoleService {
 		}
 	}
 
+	public List<Console> listAllConsole(){
+		return repository.searchAll();
+		
+	}
+	
 	public ConsoleRepository getRepository() {
 		return repository;
 	}
