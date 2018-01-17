@@ -26,5 +26,4 @@ public class Videogame {
 	public void setReleaseDate(Date releaseDate) {
 		ReleaseDate = releaseDate;
 	}
-	
 }

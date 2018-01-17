@@ -17,5 +17,4 @@ public class Console {
 	public void setCodCompany(int codCompany) {
 		CodCompany = codCompany;
 	}
-	
 }

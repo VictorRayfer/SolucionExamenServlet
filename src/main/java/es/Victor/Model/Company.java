@@ -27,5 +27,4 @@ public class Company {
 	public void setCreationDate(Date creationDate) {
 		CreationDate = creationDate;
 	}
-	
 }
