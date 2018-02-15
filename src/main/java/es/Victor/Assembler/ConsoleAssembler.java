@@ -10,9 +10,9 @@ public class ConsoleAssembler {
 		
 		Console console = new Console();
 		
-		int cod = Integer.parseInt(request.getParameter("CodCompany"));
+		int code = Integer.parseInt(request.getParameter("CodCompany"));
 		console.setName(request.getParameter("Name"));
-		console.setCodCompany(cod);
+		console.setCodCompany(code);
 		return console;
 	}
 }
