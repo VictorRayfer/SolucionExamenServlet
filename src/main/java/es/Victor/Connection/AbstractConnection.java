@@ -34,7 +34,6 @@ public abstract class AbstractConnection {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-
 	}
 
 	public void close(Statement statement) {
@@ -68,5 +67,4 @@ public abstract class AbstractConnection {
 			}
 		}
 	}
-
 }
