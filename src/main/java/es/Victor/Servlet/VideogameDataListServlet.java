@@ -17,17 +17,14 @@ public class VideogameDataListServlet extends HttpServlet{
 	private VideogameService service = new VideogameService();
 	private static final long serialVersionUID = 1L;
 
-
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Videogame> listAllVideogame = service.listAllVideogame();
 		req.setAttribute("listAllVideogame", listAllVideogame);
 		redirect(req,resp);
 	}
 	
-	
 	protected void redirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/VideogameList.jsp");
 		dispatcher.forward(req,resp);
-}
-
+	}
 }
