@@ -8,7 +8,6 @@ public class Company {
 	private String Name;
 	private Date CreationDate;
 	
-	
 	public Integer getId() {
 		return Id;
 	}
