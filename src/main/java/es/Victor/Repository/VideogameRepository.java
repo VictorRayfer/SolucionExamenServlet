@@ -52,8 +52,7 @@ public class VideogameRepository {
 
 	public void update(Videogame videogame) {
 		Connection connect = null;
-		PreparedStatement preparedStatement = null;
-
+		PreparedStatement preparedStatement = null;	
 		try {
 			connect = connection.open(jdbcUrl);
 			preparedStatement = connect
@@ -76,7 +75,7 @@ public class VideogameRepository {
 		Videogame videogameInDatabase = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
-		Connection connect = connection.open(jdbcUrl);
+		Connection connect = connection.open(jdbcUrl);	
 		try {
 			prepareStatement = connect.prepareStatement("SELECT * FROM GAME WHERE title = ?");
 			prepareStatement.setString(1, gameForm.getTitle());
@@ -86,7 +85,6 @@ public class VideogameRepository {
 				videogameInDatabase.setTitle(resultSet.getString(0));
 				videogameInDatabase.setPegi(resultSet.getInt(2));
 				videogameInDatabase.setReleaseDate(resultSet.getDate(3));
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,7 +92,6 @@ public class VideogameRepository {
 		} finally {
 			close(resultSet);
 			close(prepareStatement);
-
 		}
 		connection.close(connect);
 		return videogameInDatabase;
@@ -116,7 +113,6 @@ public class VideogameRepository {
 
 				listGames.add(videogameInDatabase);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -124,7 +120,6 @@ public class VideogameRepository {
 			close(resultSet);
 			close(prepareStatement);
 		}
-
 		connection.close(connect);
 		return listGames;
 	}

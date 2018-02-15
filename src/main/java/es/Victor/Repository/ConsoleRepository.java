@@ -35,7 +35,7 @@ public class ConsoleRepository {
 		Console consoleInDatabase = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
-		Connection connect = null;
+		Connection connect = null;	
 		try {
 			connect = connection.open(jdbcUrl);
 			prepareStatement = connect.prepareStatement("SELECT * FROM CONSOLE WHERE name = ?");
@@ -52,7 +52,6 @@ public class ConsoleRepository {
 		} finally {
 			close(resultSet);
 			close(prepareStatement);
-
 		}
 		connection.close(connect);
 		return consoleInDatabase;
@@ -72,14 +71,12 @@ public class ConsoleRepository {
 		} finally {
 			connection.close(preparedStatement);
 		}
-
 		connection.close(connect);
 	}
 
 	public void update(Console console) {
 		Connection connect = null;
 		PreparedStatement preparedStatement = null;
-
 		try {
 			connect = connection.open(jdbcUrl);
 			preparedStatement = connect
@@ -87,7 +84,6 @@ public class ConsoleRepository {
 			preparedStatement.setString(1, console.getName());
 			preparedStatement.setInt(2, console.getCodCompany());
 			preparedStatement.executeUpdate();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -112,7 +108,6 @@ public class ConsoleRepository {
 
 				listGames.add(consoleInDatabase);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -142,5 +137,4 @@ public class ConsoleRepository {
 			throw new RuntimeException(e);
 		}
 	}
-
 }
