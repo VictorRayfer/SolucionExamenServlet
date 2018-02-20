@@ -20,7 +20,7 @@ public class DeleteVideogameServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setAttribute("Title", req.getParameter("Title"));
+		req.setAttribute("title", req.getParameter("title"));
 		confirmationRedirect(req, resp);
 	}
 
