@@ -4,26 +4,26 @@ import java.sql.Date;
 
 public class Company {
 	
-	private Integer Id;
-	private String Name;
-	private Date CreationDate;
+	private Integer id;
+	private String name;
+	private Date creationDate;
 	
 	public Integer getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Integer id) {
-		this.Id = id;
+		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public Date getCreationDate() {
-		return CreationDate;
+		return creationDate;
 	}
 	public void setCreationDate(Date creationDate) {
-		CreationDate = creationDate;
+		this.creationDate = creationDate;
 	}
 }

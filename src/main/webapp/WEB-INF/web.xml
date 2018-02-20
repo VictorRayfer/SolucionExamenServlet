@@ -1,7 +1,67 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee ;http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	
+	<servlet>
+		<servlet-name>ConsoleServlet</servlet-name>
+		<servlet-class>es.Victor.Servlet.ConsoleServlet</servlet-class>
+	</servlet>
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+	<servlet-mapping>
+		<servlet-name>ConsoleServlet</servlet-name>
+		<url-pattern>console</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>VideogameServlet</servlet-name>
+		<servlet-class>es.Victor.Servlet.VideogameServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>VideogameServlet</servlet-name>
+		<url-pattern>videogame</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>VideogameDataListServlet</servlet-name>
+		<servlet-class>es.Victor.Servlet.VideogameDataListServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>VideogameDataListServlet</servlet-name>
+		<url-pattern>dataGame</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ConsoleDataListServlet</servlet-name>
+		<servlet-class>es.Victor.Servlet.ConsoleDataListServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ConsoleDataListServlet</servlet-name>
+		<url-pattern>dataConsole</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DeleteConsoleServlet</servlet-name>
+		<servlet-class>es.Victor.Servlet.DeleteConsoleServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DeleteConsoleServlet</servlet-name>
+		<url-pattern>deleteConsole</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DeleteVideogameServlet</servlet-name>
+		<servlet-class>es.Victor.Servlet.DeleteVideogameServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DeleteVideogameServlet</servlet-name>
+		<url-pattern>deleteVideogame</url-pattern>
+	</servlet-mapping>
+
 </web-app>

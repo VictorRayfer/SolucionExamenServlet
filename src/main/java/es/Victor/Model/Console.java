@@ -2,19 +2,19 @@ package es.Victor.Model;
 
 public class Console {
 	
-	private String Name;
-	private int CodCompany;
+	private String name;
+	private int codCompany;
 	
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
-	public int getCodCompany() {
-		return CodCompany;
+	public int getcodCompany() {
+		return codCompany;
 	}
-	public void setCodCompany(int codCompany) {
-		CodCompany = codCompany;
+	public void setCodCompany(Integer codCompany) {
+		this.codCompany = codCompany;
 	}
 }
