@@ -11,9 +11,9 @@ public class VideogameAssembler {
 	public static Videogame assembleVideogameFrom(HttpServletRequest request) {
 
 		Videogame videogame = new Videogame();
-		videogame.setTitle(request.getParameter("Title"));
-		videogame.setPegi(Integer.parseInt(request.getParameter("Pegi")));
-		videogame.setReleaseDate(Date.valueOf(request.getParameter("ReleaseDate")));
+		videogame.setTitle(request.getParameter("title"));
+		videogame.setPegi(Integer.parseInt(request.getParameter("pegi")));
+		videogame.setReleaseDate(Date.valueOf(request.getParameter("releaseDate")));
 		return videogame;
 	}
 }
