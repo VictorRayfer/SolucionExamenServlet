@@ -31,7 +31,6 @@ public class VideogameService {
 		
 	}
 	
-
 	public VideogameRepository getRepository() {
 		return repository;
 	}
