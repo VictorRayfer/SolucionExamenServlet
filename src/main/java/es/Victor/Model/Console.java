@@ -11,7 +11,7 @@ public class Console {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getcodCompany() {
+	public int getCodCompany() {
 		return codCompany;
 	}
 	public void setCodCompany(Integer codCompany) {
