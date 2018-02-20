@@ -31,6 +31,10 @@ public class ConsoleService {
 		
 	}
 	
+	public void deleteConsole(Console console) {
+		repository.delete(console);
+	}
+	
 	public ConsoleRepository getRepository() {
 		return repository;
 	}
@@ -38,4 +42,5 @@ public class ConsoleService {
 	public void setRepository(ConsoleRepository repository) {
 		this.repository = repository;
 	}
+
 }
