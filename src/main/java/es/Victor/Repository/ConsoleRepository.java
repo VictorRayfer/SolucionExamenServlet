@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import es.Victor.Connection.AbstractConnection;
 import es.Victor.Model.Console;
 
@@ -35,7 +38,7 @@ public class ConsoleRepository {
 		Console consoleInDatabase = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
-		Connection connect = null;	
+		Connection connect = null;
 		try {
 			connect = connection.open(jdbcUrl);
 			prepareStatement = connect.prepareStatement("SELECT * FROM CONSOLE WHERE name = ?");
@@ -52,6 +55,7 @@ public class ConsoleRepository {
 		} finally {
 			close(resultSet);
 			close(prepareStatement);
+
 		}
 		connection.close(connect);
 		return consoleInDatabase;
@@ -71,12 +75,14 @@ public class ConsoleRepository {
 		} finally {
 			connection.close(preparedStatement);
 		}
+
 		connection.close(connect);
 	}
 
 	public void update(Console console) {
 		Connection connect = null;
 		PreparedStatement preparedStatement = null;
+
 		try {
 			connect = connection.open(jdbcUrl);
 			preparedStatement = connect
@@ -84,6 +90,7 @@ public class ConsoleRepository {
 			preparedStatement.setString(1, console.getName());
 			preparedStatement.setInt(2, console.getCodCompany());
 			preparedStatement.executeUpdate();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -108,6 +115,7 @@ public class ConsoleRepository {
 
 				listGames.add(consoleInDatabase);
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -120,6 +128,24 @@ public class ConsoleRepository {
 		return listGames;
 	}
 
+	public void delete(Console consoleName) {
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			conn = connection.open(jdbcUrl);
+			preparedStatement = conn.prepareStatement("DELETE * FROM CONSOLE  WHERE name = ?");
+			preparedStatement.setString(1, consoleName.getName());
+			preparedStatement.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			close(preparedStatement);
+		}
+	}
+	
 	private void close(PreparedStatement prepareStatement) {
 		try {
 			prepareStatement.close();
