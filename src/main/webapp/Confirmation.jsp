@@ -9,8 +9,7 @@
 <title>Delete confirmation</title>
 </head>
 <body>
-	Are you sure to delete this item?
-
+		Do you want to delete this item?
 <c:choose>
 	<c:when test="${name != null}">
 		<form action="deleteConsole" method="post">

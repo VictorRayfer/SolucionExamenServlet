@@ -26,7 +26,6 @@ public class DeleteConsoleServlet extends HttpServlet {
 		confirmationRedirect(req, resp);	
 	}
 	
-
 	private void listRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ConsoleList.jsp");
 		dispatcher.forward(req, resp);
