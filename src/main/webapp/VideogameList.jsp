@@ -15,7 +15,7 @@
 		pageContext.setAttribute("videogame", videogame);
 	%>
 
-	<form action="dataGames" method="post">
+	<form action="dataGame" method="post">
 		<table border="1">
 			<thead>
 				<tr>
@@ -26,9 +26,10 @@
 			</thead>
 			<c:forEach items="${videogame}" var="videogame">
 				<tr>
-					<td><c:out value="${videogame.Title}" /></td>
-					<td><c:out value="${videogame.Pegi}" /></td>
-					<td><c:out value="${videogame.ReleaseDate}" /></td>
+					<td><c:out value="${videogame.title}" /></td>
+					<td><c:out value="${videogame.pegi}" /></td>
+					<td><c:out value="${videogame.releaseDate}" /></td>
+					<td><a href="/deleteVideogame?title=${videogame.title}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>

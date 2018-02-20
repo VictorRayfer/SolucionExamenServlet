@@ -9,11 +9,11 @@
 <body>
 	<form action="videogame" method="post">
 		<span>Title:</span> 
-		<input type="text" name="Title"/> <br/>
+		<input type="text" name="title"/> <br/>
 		<span>Pegi:</span> 
-		<input type="text" name="Pegi"/><br/>
+		<input type="text" name="pegi"/><br/>
 		<span>ReleaseDate:</span> 
-		<input type="date" name="ReleaseDate"/><br/>
+		<input type="date" name="releaseDate"/><br/>
 		<input type="submit"/>
 	</form>
 </body>

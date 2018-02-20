@@ -12,17 +12,17 @@
 	Are you sure to delete this item?
 
 <c:choose>
-	<c:when test="${Name != null}">
+	<c:when test="${name != null}">
 		<form action="deleteConsole" method="post">
-			<input type="text" value="${Name}"> 
+			<input type="text" value="${name}"> 
 			<input type="submit" value="Yes">
 		</form>
 	</c:when>
 	<c:otherwise>
       <form action="deleteVideogame" method="post">
-		<input type="text" value="${Title}"> 
+		<input type="text" value="${title}"> 
 		<input type="submit"value="Yes">
-	</form>
+	  </form>
 	</c:otherwise>
 </c:choose>
 </body>

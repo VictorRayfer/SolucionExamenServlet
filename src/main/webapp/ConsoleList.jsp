@@ -18,7 +18,7 @@
 	%>
 
 	<form action="dataConsole" method="post">
-
+		
 		<table border="1">
 			<thead>
 				<tr>
@@ -29,8 +29,9 @@
 			</thead>
 			<c:forEach items="${console}" var="console">
 				<tr>
-					<td><c:out value="${console.Name}" /></td>
-					<td><c:out value="${console.CodCompany}" /></td>
+					<td><c:out value="${console.name}" /></td>
+					<td><c:out value="${console.codCompany}" /></td>
+					<td><a href="/deleteConsole?name=${console.name}">Delete</a></td>					
 				</tr>
 			</c:forEach>
 		</table>
