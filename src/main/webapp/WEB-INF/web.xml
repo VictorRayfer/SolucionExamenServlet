@@ -63,5 +63,4 @@
 		<servlet-name>DeleteVideogameServlet</servlet-name>
 		<url-pattern>deleteVideogame</url-pattern>
 	</servlet-mapping>
-
 </web-app>
