@@ -22,9 +22,10 @@ public class DeleteConsoleServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setAttribute("Name", req.getParameter("Name"));
+		req.setAttribute("name", req.getParameter("name"));
 		confirmationRedirect(req, resp);	
 	}
+	
 
 	private void listRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ConsoleList.jsp");
@@ -32,7 +33,7 @@ public class DeleteConsoleServlet extends HttpServlet {
 	}
 
 	private void confirmationRedirect(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Confirmation.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/confirmation.jsp");
 		dispatcher.forward(req, resp);
 	}
 
