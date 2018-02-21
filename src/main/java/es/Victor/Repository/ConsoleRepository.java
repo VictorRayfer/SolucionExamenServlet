@@ -101,7 +101,7 @@ public class ConsoleRepository {
 	}
 
 	public List<Console> searchAll() {
-		List<Console> listGames = new ArrayList<Console>();
+		List<Console> listgame = new ArrayList<Console>();
 		Connection connect = connection.open(jdbcUrl);
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -113,7 +113,7 @@ public class ConsoleRepository {
 				consoleInDatabase.setName(resultSet.getString(1));
 				consoleInDatabase.setCodCompany(resultSet.getInt(2));
 
-				listGames.add(consoleInDatabase);
+				listgame.add(consoleInDatabase);
 			}
 
 		} catch (SQLException e) {
@@ -125,7 +125,7 @@ public class ConsoleRepository {
 		}
 
 		connection.close(connect);
-		return listGames;
+		return listgame;
 	}
 
 	public void delete(Console consoleName) {

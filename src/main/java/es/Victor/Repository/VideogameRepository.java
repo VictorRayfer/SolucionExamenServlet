@@ -98,7 +98,7 @@ public class VideogameRepository {
 	}
 
 	public List<Videogame> searchAll() {
-		List<Videogame> listGames = new ArrayList<Videogame>();
+		List<Videogame> listgame = new ArrayList<Videogame>();
 		Connection connect = connection.open(jdbcUrl);
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -111,7 +111,7 @@ public class VideogameRepository {
 				videogameInDatabase.setPegi(resultSet.getInt(2));
 				videogameInDatabase.setReleaseDate(resultSet.getDate(3));
 
-				listGames.add(videogameInDatabase);
+				listgame.add(videogameInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -121,9 +121,27 @@ public class VideogameRepository {
 			close(prepareStatement);
 		}
 		connection.close(connect);
-		return listGames;
+		return listgame;
 	}
+	
+	public void delete(Videogame videogame) {
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
 
+		try {
+			conn = connection.open(jdbcUrl);
+			preparedStatement = conn.prepareStatement("DELETE * FROM GAME  WHERE title = ?");
+			preparedStatement.setString(1, videogame.getTitle());
+			preparedStatement.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			close(preparedStatement);
+		}
+	}
+	
 	private void close(PreparedStatement prepareStatement) {
 		try {
 			prepareStatement.close();

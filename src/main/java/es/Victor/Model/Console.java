@@ -3,7 +3,7 @@ package es.Victor.Model;
 public class Console {
 	
 	private String name;
-	private int codCompany;
+	private Integer codCompany;
 	
 	public String getName() {
 		return name;
