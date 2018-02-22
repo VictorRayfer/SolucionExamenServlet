@@ -13,7 +13,7 @@ public class VideogameAssembler {
 		Videogame videogame = new Videogame();
 		videogame.setTitle(request.getParameter("title"));
 		videogame.setPegi(Integer.parseInt(request.getParameter("pegi")));
-		videogame.setReleaseDate(Date.valueOf(request.getParameter("releaseDate")));
+		videogame.setReleaseDateFromString((request.getParameter("releaseDate")));
 		return videogame;
 	}
 }

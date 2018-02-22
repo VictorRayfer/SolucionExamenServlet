@@ -9,10 +9,10 @@ import es.Victor.Model.Company;
 public class CompanyAssembler {
 
 	public static Company assembleUserFrom(HttpServletRequest request) {
-		
+
 		Company company = new Company();
 		company.setName(request.getParameter("name"));
-		company.setCreationDate(Date.valueOf(request.getParameter("creationDate")));
+		company.setCreationDateFromString(request.getParameter("creationDate"));
 		return company;
 	}
 }
