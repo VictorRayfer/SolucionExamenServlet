@@ -21,13 +21,13 @@ public class VideogameService {
 	public void createNewVideogameFromRequest(Videogame gameForm) {
 		Videogame gameDB = repository.search(gameForm);
 		if (gameDB == null) {
-			repository.insertGame(gameForm);
+			repository.insertVideogame(gameForm);
 		} else {
 			repository.update(gameForm);
 		}
 	}
 
-	public List<Videogame> listAllVideogames() {
+	public List<Videogame> listAllVideogame() {
 		return repository.searchAll();
 	}
 
@@ -39,7 +39,7 @@ public class VideogameService {
 		return repository.orderByReleaseDate();
 	}
 
-	public void deleteVideoGame(Videogame game) {
+	public void deleteVideogame(Videogame game) {
 		repository.delete(game);
 	}
 

@@ -9,6 +9,7 @@ import es.Victor.Model.Console;
 import es.Victor.Repository.ConsoleRepository;
 
 public class ConsoleService {
+
 	ConsoleAssembler assembler = new ConsoleAssembler();
 	ConnectionManager manager = new H2Connection();
 	private ConsoleRepository repository = new ConsoleRepository();
