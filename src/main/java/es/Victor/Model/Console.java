@@ -3,7 +3,7 @@ package es.Victor.Model;
 public class Console {
 	
 	private String name;
-	private Integer codCompany;
+	private Integer companyId;
 	
 	public String getName() {
 		return name;
@@ -11,10 +11,10 @@ public class Console {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getCodCompany() {
-		return codCompany;
+	public int getCompanyId() {
+		return companyId;
 	}
-	public void setCodCompany(Integer codCompany) {
-		this.codCompany = codCompany;
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
 	}
 }
