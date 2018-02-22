@@ -6,66 +6,44 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import es.Victor.Connection.AbstractConnection;
+import es.Victor.Connection.ConnectionManager;
+import es.Victor.Connection.H2Connection;
 import es.Victor.Model.Console;
 
 public class ConsoleRepository {
-
-	private AbstractConnection connection = new AbstractConnection() {
-
-		@Override
-		public String getDriver() {
-			return "org.h2.Driver";
-		}
-
-		@Override
-		public String getDatabaseUser() {
-			return "sa";
-		}
-
-		@Override
-		public String getDatabasePassword() {
-			return "";
-		}
-	};
-
-	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/Console.sql'";
+	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'";
+	ConnectionManager manager = new H2Connection();
 
 	public Console search(Console consoleForm) {
-		Console consoleInDatabase = null;
+		Console consoleDB = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
-		Connection connect = null;
+		Connection connect = manager.open(jdbcUrl);
 		try {
-			connect = connection.open(jdbcUrl);
 			prepareStatement = connect.prepareStatement("SELECT * FROM CONSOLE WHERE name = ?");
 			prepareStatement.setString(1, consoleForm.getName());
 			resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
-				consoleInDatabase = new Console();
-				consoleInDatabase.setName(resultSet.getString(0));
-				consoleInDatabase.setCodCompany(resultSet.getInt(1));
+				consoleDB = new Console();
+				consoleDB.setName(resultSet.getString(0));
+				consoleDB.setCodCompany(resultSet.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
-			close(resultSet);
-			close(prepareStatement);
-
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
 		}
-		connection.close(connect);
-		return consoleInDatabase;
+		return consoleDB;
 	}
 
-	public void insert(Console consoleForm) {
-		Connection connect = connection.open(jdbcUrl);
+	public void insertConsole(Console consoleForm) {
+		Connection connect = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = connect.prepareStatement("INSERT INTO CONSOLE (name,codCompany)" + "VALUES (?, ?)");
+			preparedStatement = connect.prepareStatement("INSERT INTO CONSOLE (name, company)" + "VALUES (?, ?)");
 			preparedStatement.setString(1, consoleForm.getName());
 			preparedStatement.setInt(2, consoleForm.getCodCompany());
 			preparedStatement.executeUpdate();
@@ -73,36 +51,19 @@ public class ConsoleRepository {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
-			connection.close(preparedStatement);
+			manager.close(preparedStatement);
+			manager.close(connect);
 		}
-
-		connection.close(connect);
 	}
 
-	public void update(Console console) {
-		Connection connect = null;
-		PreparedStatement preparedStatement = null;
-
-		try {
-			connect = connection.open(jdbcUrl);
-			preparedStatement = connect
-					.prepareStatement("UPDATE CONSOLE SET " + "name = ?, codCompany = ? WHERE name = ?");
-			preparedStatement.setString(1, console.getName());
-			preparedStatement.setInt(2, console.getCodCompany());
-			preparedStatement.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} finally {
-			connection.close(preparedStatement);
-			connection.close(connect);
-		}
+	public void update(Console consoleForm) {
+		Connection connect = manager.open(jdbcUrl);
+		manager.close(connect);
 	}
 
 	public List<Console> searchAll() {
-		List<Console> listgame = new ArrayList<Console>();
-		Connection connect = connection.open(jdbcUrl);
+		List<Console> listConsole = new ArrayList<Console>();
+		Connection connect = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
 		try {
@@ -112,55 +73,83 @@ public class ConsoleRepository {
 				Console consoleInDatabase = new Console();
 				consoleInDatabase.setName(resultSet.getString(1));
 				consoleInDatabase.setCodCompany(resultSet.getInt(2));
-
-				listgame.add(consoleInDatabase);
+				listConsole.add(consoleInDatabase);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
-			close(resultSet);
-			close(prepareStatement);
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
 		}
-
-		connection.close(connect);
-		return listgame;
+		return listConsole;
 	}
 
-	public void delete(Console consoleName) {
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-
+	public List<Console> orderByTitle() {
+		List<Console> listConsole = new ArrayList<Console>();
+		Connection connect = manager.open(jdbcUrl);
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
 		try {
-			conn = connection.open(jdbcUrl);
-			preparedStatement = conn.prepareStatement("DELETE * FROM CONSOLE  WHERE name = ?");
-			preparedStatement.setString(1, consoleName.getName());
-			preparedStatement.executeUpdate();
+			prepareStatement = connect.prepareStatement("SELECT * FROM CONSOLE ORDER BY name ASC");
+			resultSet = prepareStatement.executeQuery();
+			while (resultSet.next()) {
+				Console consoleInDatabase = new Console();
+				consoleInDatabase.setName(resultSet.getString(1));
+				consoleInDatabase.setCodCompany(resultSet.getInt(2));
+				listConsole.add(consoleInDatabase);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
+		}
+		return listConsole;
+	}
 
+	public void delete(Console console) {
+		Connection connect = manager.open(jdbcUrl);
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connect.prepareStatement("DELETE FROM CONSOLE WHERE name ='" + console.getName() + "'");
+			preparedStatement.setString(1, console.getName());
+			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
-			close(preparedStatement);
-		}
-	}
-	
-	private void close(PreparedStatement prepareStatement) {
-		try {
-			prepareStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			manager.close(preparedStatement);
+			manager.close(connect);
 		}
 	}
 
-	private void close(ResultSet resultSet) {
+	public List<Console> selectByCompany(int id) {
+		List<Console> listConsole = new ArrayList<Console>();
+		Connection connect = manager.open(jdbcUrl);
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
 		try {
-			resultSet.close();
+			prepareStatement = connect.prepareStatement("SELECT * FROM CONSOLE WHERE companyId = ?");
+			prepareStatement.setString(1, id + "");
+			resultSet = prepareStatement.executeQuery();
+			while (resultSet.next()) {
+				Console consoleInDatabase = new Console();
+				consoleInDatabase.setName(resultSet.getString(1));
+				consoleInDatabase.setCodCompany(resultSet.getInt(2));
+				listConsole.add(consoleInDatabase);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
+		} finally {
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
 		}
+		return listConsole;
 	}
 }
