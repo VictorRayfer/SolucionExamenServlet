@@ -18,7 +18,7 @@ public class VideogameService {
 		return VideogameAssembler.assembleVideogameFrom(req);
 	}
 
-	public void createNewVideoGameFromRequest(Videogame gameForm) {
+	public void createNewVideogameFromRequest(Videogame gameForm) {
 		Videogame gameDB = repository.search(gameForm);
 		if (gameDB == null) {
 			repository.insertGame(gameForm);
