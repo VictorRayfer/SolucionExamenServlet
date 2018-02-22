@@ -7,6 +7,7 @@ import es.Victor.Model.Company;
 public class CompanyAssembler {
 
 	public static Company assembleCompanyFrom(HttpServletRequest request) {
+
 		Company company = new Company();
 		company.setName(request.getParameter("name"));
 		company.setCreationDateFromString(request.getParameter("creationDate"));
