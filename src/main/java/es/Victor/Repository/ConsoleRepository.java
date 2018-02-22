@@ -11,6 +11,7 @@ import es.Victor.Connection.H2Connection;
 import es.Victor.Model.Console;
 
 public class ConsoleRepository {
+
 	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'";
 	ConnectionManager manager = new H2Connection();
 

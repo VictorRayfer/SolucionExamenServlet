@@ -12,6 +12,7 @@ import es.Victor.Connection.H2Connection;
 import es.Victor.Model.Videogame;
 
 public class VideogameRepository {
+
 	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test";
 	ConnectionManager manager = new H2Connection();
 
