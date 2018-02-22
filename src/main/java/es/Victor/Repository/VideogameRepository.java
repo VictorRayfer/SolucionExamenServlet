@@ -42,7 +42,7 @@ public class VideogameRepository {
 		return gameDB;
 	}
 
-	public void insertGame(Videogame gameForm) {
+	public void insertVideogame(Videogame gameForm) {
 		Connection connect = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
@@ -164,7 +164,7 @@ public class VideogameRepository {
 	}
 
 	public List<Videogame> selectByCompany(int id) {
-		List<Videogame> listVideoGame = new ArrayList<Videogame>();
+		List<Videogame> listVideogame = new ArrayList<Videogame>();
 		Connection connect = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -178,7 +178,7 @@ public class VideogameRepository {
 				gameDB.setPegi(resultSet.getString(2));
 				gameDB.setReleaseDate(resultSet.getDate(3));
 				gameDB.setCompanyId(resultSet.getInt(4));
-				listVideoGame.add(gameDB);
+				listVideogame.add(gameDB);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -188,6 +188,6 @@ public class VideogameRepository {
 			manager.close(prepareStatement);
 			manager.close(connect);
 		}
-		return listVideoGame;
+		return listVideogame;
 	}
 }
