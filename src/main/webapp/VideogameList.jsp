@@ -21,7 +21,7 @@
 				<tr>
 					<td>Title</td>
 					<td>Pegi</td>
-					<td>ReleaseDate</td>
+					<td>Release Date</td>
 				</tr>
 			</thead>
 			<c:forEach items="${videogame}" var="videogame">

@@ -10,7 +10,7 @@
 	<form action="console" method="post">
 		<span>Name:</span> 
 		<input type="text" name="name"/> <br/>
-		<span>CodCompany:</span> 
+		<span>Cod Company:</span> 
 		<input type="text" name="codCompany"/><br/>
 		<input type="submit"/>
 	</form>

@@ -12,7 +12,7 @@
 		<input type="text" name="title"/> <br/>
 		<span>Pegi:</span> 
 		<input type="text" name="pegi"/><br/>
-		<span>ReleaseDate:</span> 
+		<span>Release Date:</span> 
 		<input type="date" name="releaseDate"/><br/>
 		<input type="submit"/>
 	</form>
