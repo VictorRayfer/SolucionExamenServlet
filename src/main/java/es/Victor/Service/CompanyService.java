@@ -9,7 +9,6 @@ import es.Victor.Model.Company;
 import es.Victor.Repository.CompanyRepository;
 
 public class CompanyService {
-
 	CompanyAssembler assembler = new CompanyAssembler();
 	ConnectionManager manager = new H2Connection();
 	private CompanyRepository repository = new CompanyRepository();
