@@ -9,32 +9,33 @@ import java.sql.SQLException;
 public class H2Connection implements ConnectionManager {
 
 	public Connection open(String jdbcUrl) {
-		Connection conn = null;
+		Connection connect = null;
 		try {
 			Class.forName("org.h2.Driver");
-			conn = DriverManager.getConnection(jdbcUrl + ";INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'", "sa","");
+			connect = DriverManager.getConnection(jdbcUrl + ";INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'", "sa",
+					"");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		return conn;
+		return connect;
 	}
 
-	public Connection executeSql(Connection conn, String sql) {
+	public Connection executeSql(Connection connect, String sql) {
 		PreparedStatement prepareStatement;
 		try {
-			prepareStatement = conn.prepareStatement(sql);
+			prepareStatement = connect.prepareStatement(sql);
 			prepareStatement.execute(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		return conn;
+		return connect;
 	}
 
-	public void close(Connection conn) {
+	public void close(Connection connect) {
 		try {
-			conn.close();
+			connect.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
