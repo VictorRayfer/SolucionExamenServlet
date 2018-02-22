@@ -26,7 +26,7 @@ public class ConsoleRepository {
 			while (resultSet.next()) {
 				consoleDB = new Console();
 				consoleDB.setName(resultSet.getString(0));
-				consoleDB.setCodCompany(resultSet.getInt(1));
+				consoleDB.setCompanyId(resultSet.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class ConsoleRepository {
 		try {
 			preparedStatement = connect.prepareStatement("INSERT INTO CONSOLE (name, company)" + "VALUES (?, ?)");
 			preparedStatement.setString(1, consoleForm.getName());
-			preparedStatement.setInt(2, consoleForm.getCodCompany());
+			preparedStatement.setInt(2, consoleForm.getCompanyId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -57,8 +57,8 @@ public class ConsoleRepository {
 	}
 
 	public void update(Console consoleForm) {
-		Connection connect = manager.open(jdbcUrl);
-		manager.close(connect);
+		Connection conn = manager.open(jdbcUrl);
+		manager.close(conn);
 	}
 
 	public List<Console> searchAll() {
@@ -72,7 +72,7 @@ public class ConsoleRepository {
 			while (resultSet.next()) {
 				Console consoleInDatabase = new Console();
 				consoleInDatabase.setName(resultSet.getString(1));
-				consoleInDatabase.setCodCompany(resultSet.getInt(2));
+				consoleInDatabase.setCompanyId(resultSet.getInt(2));
 				listConsole.add(consoleInDatabase);
 			}
 		} catch (SQLException e) {
@@ -97,7 +97,7 @@ public class ConsoleRepository {
 			while (resultSet.next()) {
 				Console consoleInDatabase = new Console();
 				consoleInDatabase.setName(resultSet.getString(1));
-				consoleInDatabase.setCodCompany(resultSet.getInt(2));
+				consoleInDatabase.setCompanyId(resultSet.getInt(2));
 				listConsole.add(consoleInDatabase);
 			}
 		} catch (SQLException e) {
@@ -139,7 +139,7 @@ public class ConsoleRepository {
 			while (resultSet.next()) {
 				Console consoleInDatabase = new Console();
 				consoleInDatabase.setName(resultSet.getString(1));
-				consoleInDatabase.setCodCompany(resultSet.getInt(2));
+				consoleInDatabase.setCompanyId(resultSet.getInt(2));
 				listConsole.add(consoleInDatabase);
 			}
 		} catch (SQLException e) {
