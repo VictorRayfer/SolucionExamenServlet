@@ -46,11 +46,7 @@ public class ConsoleService {
 	public void setRepository(ConsoleRepository repository) {
 		this.repository = repository;
 	}
-<<<<<<< HEAD
-=======
-
 	public List<Console> listAllByCompany(int companyId) {
 		return repository.selectByCompany(companyId);
 	}
->>>>>>> master
 }
