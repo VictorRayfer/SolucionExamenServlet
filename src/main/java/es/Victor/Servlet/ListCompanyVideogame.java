@@ -2,29 +2,29 @@ package es.Victor.Servlet;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import es.Victor.Model.Console;
-import es.Victor.Service.ConsoleService;
+import es.Victor.Model.Videogame;
+import es.Victor.Service.VideogameService;
 
-public class ConsoleDataListServlet extends HttpServlet {
-	
+public class ListCompanyVideogame extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-	
-	private ConsoleService service = new ConsoleService();
+	private VideogameService service = new VideogameService();
 
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Console> listAllConsole = service.listAllConsole();
-		req.setAttribute("listAllConsole", listAllConsole);
-		redirect(req,resp);
+		int id = Integer.parseInt(req.getParameter("selectCompany"));
+		List<Videogame> listAllVideogame = service.listAllByCompany(id);
+		req.setAttribute("listAllVideogameByCompany", listAllVideogame);
+		redirect(req, resp);
 	}
-	
+
 	protected void redirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ConsoleList.jsp");
-		dispatcher.forward(req,resp);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ListVideogameByCompany.jsp");
+		dispatcher.forward(req, resp);
 	}
 }

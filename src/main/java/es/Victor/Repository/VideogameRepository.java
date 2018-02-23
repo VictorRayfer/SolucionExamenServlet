@@ -1,144 +1,193 @@
 package es.Victor.Repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import es.Victor.Connection.AbstractConnection;
+import es.Victor.Connection.ConnectionManager;
+import es.Victor.Connection.H2Connection;
 import es.Victor.Model.Videogame;
 
 public class VideogameRepository {
 
-	private AbstractConnection connection = new AbstractConnection() {
+	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test";
+	ConnectionManager manager = new H2Connection();
 
-		@Override
-		public String getDriver() {
-			return "org.h2.Driver";
+	public Videogame search(Videogame gameForm) {
+		Videogame gameDB = null;
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
+		Connection connect = manager.open(jdbcUrl);
+		try {
+			prepareStatement = connect.prepareStatement("SELECT * FROM Game WHERE title = ?");
+			prepareStatement.setString(1, gameForm.getTitle());
+			resultSet = prepareStatement.executeQuery();
+			while (resultSet.next()) {
+				gameDB = new Videogame();
+				gameDB.setTitle(resultSet.getString(1));
+				gameDB.setPegi(resultSet.getString(2));
+				gameDB.setReleaseDate(resultSet.getDate(3));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
 		}
+		return gameDB;
+	}
 
-		@Override
-		public String getDatabaseUser() {
-			return "sa";
-		}
-
-		@Override
-		public String getDatabasePassword() {
-			return "";
-		}
-	};
-
-	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/Videogame.sql'";
-
-	public void insert(Videogame gameForm) {
-		Connection connect = connection.open(jdbcUrl);
+	public void insertVideogame(Videogame gameForm) {
+		Connection connect = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = connect.prepareStatement("INSERT INTO GAME (title,pegi,releaseDate)" + "VALUES (?, ?, ?)");
+			preparedStatement = connect
+					.prepareStatement("INSERT INTO Game (title, age, releaseDate)" + "VALUES (?, ?, ?)");
 			preparedStatement.setString(1, gameForm.getTitle());
-			preparedStatement.setInt(2, gameForm.getPegi());
-			preparedStatement.setDate(3, gameForm.getReleaseDate());
+			preparedStatement.setString(2, gameForm.getPegi());
+			preparedStatement.setDate(3, (Date) gameForm.getReleaseDate());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
-			connection.close(preparedStatement);
+			manager.close(preparedStatement);
+			manager.close(connect);
 		}
-
-		connection.close(connect);
 	}
 
-	public void update(Videogame videogame) {
-		Connection connect = null;
-		PreparedStatement preparedStatement = null;	
+	public List<Videogame> searchAll() {
+		List<Videogame> listOfGames = new ArrayList<Videogame>();
+		Connection connect = manager.open(jdbcUrl);
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
 		try {
-			connect = connection.open(jdbcUrl);
-			preparedStatement = connect
-					.prepareStatement("UPDATE GAME SET " + "title = ?, pegi = ?, releaseDate = ? WHERE title = ?");
-			preparedStatement.setString(1, videogame.getTitle());
-			preparedStatement.setInt(2, videogame.getPegi());
-			preparedStatement.setDate(3, videogame.getReleaseDate());
-			preparedStatement.executeUpdate();
+			prepareStatement = connect.prepareStatement("SELECT * FROM VIDEOGAME");
+			resultSet = prepareStatement.executeQuery();
+			while (resultSet.next()) {
+				Videogame gameDB = new Videogame();
+				gameDB.setTitle(resultSet.getString(1));
+				gameDB.setPegi(resultSet.getString(2));
+				gameDB.setReleaseDate(resultSet.getDate(3));
+				;
+				listOfGames.add(gameDB);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
+		}
+		return listOfGames;
+	}
 
+	public List<Videogame> orderByTitle() {
+		List<Videogame> listOfGames = new ArrayList<Videogame>();
+		Connection connect = manager.open(jdbcUrl);
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
+		try {
+			prepareStatement = connect.prepareStatement("SELECT * FROM Game ORDER BY name ASC");
+			resultSet = prepareStatement.executeQuery();
+			while (resultSet.next()) {
+				Videogame gameDB = new Videogame();
+				gameDB.setTitle(resultSet.getString(1));
+				gameDB.setPegi(resultSet.getString(2));
+				gameDB.setReleaseDate(resultSet.getDate(3));
+				;
+				listOfGames.add(gameDB);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
+		}
+		return listOfGames;
+	}
+
+	public List<Videogame> orderByReleaseDate() {
+		List<Videogame> listOfGames = new ArrayList<Videogame>();
+		Connection connect = manager.open(jdbcUrl);
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
+		try {
+			prepareStatement = connect.prepareStatement("SELECT * FROM Game ORDER BY releaseDate ASC");
+			resultSet = prepareStatement.executeQuery();
+			while (resultSet.next()) {
+				Videogame gameDB = new Videogame();
+				gameDB.setTitle(resultSet.getString(1));
+				gameDB.setPegi(resultSet.getString(2));
+				gameDB.setReleaseDate(resultSet.getDate(3));
+				listOfGames.add(gameDB);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
+		}
+		return listOfGames;
+	}
+
+	public void delete(Videogame gameForm) {
+		Connection connect = manager.open(jdbcUrl);
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connect.prepareStatement("DELETE FROM Game WHERE title = ?");
+			preparedStatement.setString(1, gameForm.getTitle());
+			preparedStatement.executeUpdate();
+			System.out.println("DELETE FROM Game WHERE title = ?");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
-			connection.close(preparedStatement);
-			connection.close(connect);
+			manager.close(preparedStatement);
+			manager.close(connect);
 		}
 	}
 
-	public Videogame search(Videogame gameForm) {
-		Videogame videogameInDatabase = null;
+	public void update(Videogame consoleForm) {
+		Connection connect = manager.open(jdbcUrl);
+		manager.close(connect);
+	}
+
+	public List<Videogame> selectByCompany(int id) {
+		List<Videogame> listVideogame = new ArrayList<Videogame>();
+		Connection connect = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
-		Connection connect = connection.open(jdbcUrl);	
 		try {
-			prepareStatement = connect.prepareStatement("SELECT * FROM GAME WHERE title = ?");
-			prepareStatement.setString(1, gameForm.getTitle());
+			prepareStatement = connect.prepareStatement("SELECT * FROM VIDEOGAME WHERE companyID = ?");
+			prepareStatement.setString(1, id + "");
 			resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
-				videogameInDatabase = new Videogame();
-				videogameInDatabase.setTitle(resultSet.getString(0));
-				videogameInDatabase.setPegi(resultSet.getInt(2));
-				videogameInDatabase.setReleaseDate(resultSet.getDate(3));
+				Videogame gameDB = new Videogame();
+				gameDB.setTitle(resultSet.getString(1));
+				gameDB.setPegi(resultSet.getString(2));
+				gameDB.setReleaseDate(resultSet.getDate(3));
+				gameDB.setCompanyId(resultSet.getInt(4));
+				listVideogame.add(gameDB);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
-			close(resultSet);
-			close(prepareStatement);
+			manager.close(resultSet);
+			manager.close(prepareStatement);
+			manager.close(connect);
 		}
-		connection.close(connect);
-		return videogameInDatabase;
-	}
-
-	public List<Videogame> searchAll() {
-		List<Videogame> listGames = new ArrayList<Videogame>();
-		Connection connect = connection.open(jdbcUrl);
-		ResultSet resultSet = null;
-		PreparedStatement prepareStatement = null;
-		try {
-			prepareStatement = connect.prepareStatement("SELECT * FROM GAME");
-			resultSet = prepareStatement.executeQuery();
-			while (resultSet.next()) {
-				Videogame videogameInDatabase = new Videogame();
-				videogameInDatabase.setTitle(resultSet.getString(1));
-				videogameInDatabase.setPegi(resultSet.getInt(2));
-				videogameInDatabase.setReleaseDate(resultSet.getDate(3));
-
-				listGames.add(videogameInDatabase);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} finally {
-			close(resultSet);
-			close(prepareStatement);
-		}
-		connection.close(connect);
-		return listGames;
-	}
-
-	private void close(PreparedStatement prepareStatement) {
-		try {
-			prepareStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void close(ResultSet resultSet) {
-		try {
-			resultSet.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		return listVideogame;
 	}
 }

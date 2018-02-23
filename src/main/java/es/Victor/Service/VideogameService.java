@@ -1,40 +1,57 @@
 package es.Victor.Service;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import es.Victor.Assembler.VideogameAssembler;
+import es.Victor.Connection.ConnectionManager;
+import es.Victor.Connection.H2Connection;
 import es.Victor.Model.Videogame;
 import es.Victor.Repository.VideogameRepository;
 
 public class VideogameService {
 
+	VideogameAssembler assembler = new VideogameAssembler();
 	private VideogameRepository repository = new VideogameRepository();
+	ConnectionManager manager = new H2Connection();
 
-	public void createNewVideogameFromRequest(HttpServletRequest req) {
-		Videogame videogame = VideogameAssembler.assembleVideogameFrom(req);
-		insertOrUpdate(videogame);
+	public Videogame assembleUserFromRequest(HttpServletRequest req) {
+		return VideogameAssembler.assembleVideogameFrom(req);
 	}
 
-	public void insertOrUpdate(Videogame videogameForm) {
-		Videogame videogameInDatabase = repository.search(videogameForm);
-		if (null == videogameInDatabase) {
-			repository.insert(videogameForm);
+	public void createNewVideogameFromRequest(Videogame gameForm) {
+		Videogame gameDB = repository.search(gameForm);
+		if (gameDB == null) {
+			repository.insertVideogame(gameForm);
 		} else {
-			repository.update(videogameForm);
+			repository.update(gameForm);
 		}
 	}
-	
-	public List<Videogame> listAllVideogame(){
+
+	public List<Videogame> listAllVideogame() {
 		return repository.searchAll();
 	}
-	
+
+	public List<Videogame> OrderByTitle() {
+		return repository.orderByTitle();
+	}
+
+	public List<Videogame> OrderByReleaseDate() {
+		return repository.orderByReleaseDate();
+	}
+
+	public void deleteVideogame(Videogame game) {
+		repository.delete(game);
+	}
+
 	public VideogameRepository getRepository() {
 		return repository;
 	}
 
 	public void setRepository(VideogameRepository repository) {
 		this.repository = repository;
+	}
+
+	public List<Videogame> listAllByCompany(int companyId) {
+		return repository.selectByCompany(companyId);
 	}
 }
