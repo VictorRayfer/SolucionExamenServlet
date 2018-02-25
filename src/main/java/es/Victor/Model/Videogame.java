@@ -11,14 +11,6 @@ public class Videogame {
 	private Date releaseDate;
 	private int companyId;
 
-	public int getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(int companyId) {
-		this.companyId = companyId;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -42,17 +34,12 @@ public class Videogame {
 	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-
-	public void setReleaseDateFromString(String releaseDate2) {
-		SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = null;
-		try {
-			date = textFormat.parse(releaseDate2);
-		} catch (ParseException ex) {
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
-		}
-		this.releaseDate = date;
+	
+	public int getCompanyId() {
+		return companyId;
 	}
 
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
 }
