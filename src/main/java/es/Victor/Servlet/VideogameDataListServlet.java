@@ -7,23 +7,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import es.Victor.Model.Company;
-import es.Victor.Service.CompanyService;
+import es.Victor.Model.Videogame;
+import es.Victor.Service.VideogameService;
 
-public class SelectCompanyForConsole extends HttpServlet {
+public class VideogameDataListServlet extends HttpServlet {
 
+	private VideogameService service = new VideogameService();
 	private static final long serialVersionUID = 1L;
-	private CompanyService service = new CompanyService();
 
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Company> listAllCompany = service.listAllCompany();
-		req.setAttribute("listAllCompany", listAllCompany);
+		List<Videogame> listAllVideogame = service.listAllVideogame();
+		req.setAttribute("listAllVideogame", listAllVideogame);
 		redirect(req, resp);
 	}
 
 	protected void redirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ListConsoleByCompany.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/VideogameList.jsp");
 		dispatcher.forward(req, resp);
 	}
 }

@@ -1,37 +1,30 @@
 package es.Victor.Servlet;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import es.Victor.Model.Console;
 import es.Victor.Model.Videogame;
-import es.Victor.Service.ConsoleService;
 import es.Victor.Service.VideogameService;
 
-public class CreateVideogame extends HttpServlet {
+public class VideogameByCompany extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
 	private VideogameService service = new VideogameService();
 
 	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Videogame game = service.assembleUserFromRequest(req);
-		service.createNewVideogameFromRequest(game);
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int id = Integer.parseInt(req.getParameter("selectCompany"));
+		List<Videogame> listAllVideogame = service.listAllByCompany(id);
+		req.setAttribute("listAllVideogameByCompany", listAllVideogame);
 		redirect(req, resp);
 	}
 
 	protected void redirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CreateVideogame.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/VideogameByCompany.jsp");
 		dispatcher.forward(req, resp);
-	}
-
-	public VideogameService getService() {
-		return service;
-	}
-
-	public void setVideogameService(VideogameService service) {
-		this.service = service;
 	}
 }

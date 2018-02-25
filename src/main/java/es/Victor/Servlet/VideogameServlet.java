@@ -6,31 +6,37 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import es.Victor.Model.Company;
-import es.Victor.Service.CompanyService;
+import es.Victor.Service.VideogameService;
 
-public class CreateCompany extends HttpServlet {
+public class VideogameServlet extends HttpServlet {
 
-	private CompanyService service = new CompanyService();
 	private static final long serialVersionUID = 1L;
 
-	@Override
+	VideogameService service = new VideogameService();
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Company company = service.assembleUserFromRequest(req);
-		service.createNewCompanyFromRequest(company);
+		doAction(req, resp);
+	}
+
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doAction(req, resp);
+	}
+
+	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		service.createNewVideogameFromRequest(req);
 		redirect(req, resp);
 	}
 
 	protected void redirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CreateCompany.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/VideogameList.jsp");
 		dispatcher.forward(req, resp);
 	}
 
-	public CompanyService getService() {
+	public VideogameService getService() {
 		return service;
 	}
 
-	public void setService(CompanyService service) {
+	public void setService(VideogameService service) {
 		this.service = service;
 	}
 }
