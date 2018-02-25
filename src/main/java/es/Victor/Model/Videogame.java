@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 public class Videogame {
 
 	private String title;
-	private String pegi;
+	private Integer pegi;
 	private Date releaseDate;
 	private int companyId;
 
@@ -19,11 +19,11 @@ public class Videogame {
 		this.title = title;
 	}
 
-	public String getPegi() {
+	public Integer getPegi() {
 		return pegi;
 	}
 
-	public void setPegi(String pegi) {
+	public void setPegi(Integer pegi) {
 		this.pegi = pegi;
 	}
 
