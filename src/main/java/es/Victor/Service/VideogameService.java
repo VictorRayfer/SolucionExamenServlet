@@ -3,27 +3,24 @@ package es.Victor.Service;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import es.Victor.Assembler.VideogameAssembler;
-import es.Victor.Connection.ConnectionManager;
-import es.Victor.Connection.H2Connection;
 import es.Victor.Model.Videogame;
 import es.Victor.Repository.VideogameRepository;
 
 public class VideogameService {
 
-	VideogameAssembler assembler = new VideogameAssembler();
 	private VideogameRepository repository = new VideogameRepository();
-	ConnectionManager manager = new H2Connection();
 
-	public Videogame assembleUserFromRequest(HttpServletRequest req) {
-		return VideogameAssembler.assembleVideogameFrom(req);
+	public void createNewVideogameFromRequest(HttpServletRequest req) {
+		Videogame videogame = VideogameAssembler.assembleVideogameForm(req);
+		insertOrUpdate(videogame);
 	}
 
-	public void createNewVideogameFromRequest(Videogame gameForm) {
-		Videogame gameDB = repository.search(gameForm);
-		if (gameDB == null) {
-			repository.insertVideogame(gameForm);
+	public void insertOrUpdate(Videogame videogameForm) {
+		Videogame videogameInDatabase = repository.search(videogameForm);
+		if (null == videogameInDatabase) {
+			repository.insert(videogameForm);
 		} else {
-			repository.update(gameForm);
+			repository.update(videogameForm);
 		}
 	}
 
@@ -31,16 +28,8 @@ public class VideogameService {
 		return repository.searchAll();
 	}
 
-	public List<Videogame> OrderByTitle() {
-		return repository.orderByTitle();
-	}
-
-	public List<Videogame> OrderByReleaseDate() {
-		return repository.orderByReleaseDate();
-	}
-
-	public void deleteVideogame(Videogame game) {
-		repository.delete(game);
+	public void deleteVideogame(Videogame videogameToDelete) {
+		repository.delete(videogameToDelete);
 	}
 
 	public VideogameRepository getRepository() {
@@ -51,7 +40,7 @@ public class VideogameService {
 		this.repository = repository;
 	}
 
-	public List<Videogame> listAllByCompany(int companyId) {
-		return repository.selectByCompany(companyId);
+	public List<Videogame> listAllByCompany(int id) {
+		return repository.selectByCompany(id);
 	}
 }
