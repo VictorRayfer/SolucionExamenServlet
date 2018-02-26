@@ -27,21 +27,9 @@ public class DeleteConsoleServlet extends HttpServlet {
 		req.setAttribute("name", req.getParameter("name"));
 		confirmationRedirect(req, resp);
 	}
-<<<<<<< HEAD:src/main/java/es/Victor/Servlet/DeleteConsoleServlet.java
-	
-	private void listRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ConsoleList.jsp");
-=======
 
-<<<<<<< HEAD:src/main/java/es/Victor/Servlet/DeleteConsole.java
-	protected void confirmationRedirect(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("ConfirmationDeleteConsole.jsp");
->>>>>>> master:src/main/java/es/Victor/Servlet/DeleteConsole.java
-=======
 	private void listRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ConsoleList.jsp");
->>>>>>> master:src/main/java/es/Victor/Servlet/DeleteConsoleServlet.java
 		dispatcher.forward(req, resp);
 	}
 
