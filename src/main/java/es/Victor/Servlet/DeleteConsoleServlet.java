@@ -6,19 +6,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import es.Victor.Assembler.ConsoleAssembler;
 import es.Victor.Model.Console;
 import es.Victor.Service.ConsoleService;
 
-public class DeleteConsole extends HttpServlet {
+public class DeleteConsoleServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private ConsoleService service = new ConsoleService();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Console console = service.assembleUserFromRequest(req);
-		service.deleteConsole(console);
-		loginRedirect(req, resp);
+		Console consoleToDelete = ConsoleAssembler.assembleConsoleFrom(req);
+		service.deleteConsole(consoleToDelete);
+		listRedirect(req, resp);
 	}
 
 	@Override
@@ -32,16 +33,29 @@ public class DeleteConsole extends HttpServlet {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ConsoleList.jsp");
 =======
 
+<<<<<<< HEAD:src/main/java/es/Victor/Servlet/DeleteConsole.java
 	protected void confirmationRedirect(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("ConfirmationDeleteConsole.jsp");
 >>>>>>> master:src/main/java/es/Victor/Servlet/DeleteConsole.java
+=======
+	private void listRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ConsoleList.jsp");
+>>>>>>> master:src/main/java/es/Victor/Servlet/DeleteConsoleServlet.java
 		dispatcher.forward(req, resp);
 	}
 
-	protected void loginRedirect(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("ListConsole.jsp");
+	private void confirmationRedirect(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Confirmation.jsp");
 		dispatcher.forward(req, resp);
+	}
+
+	public ConsoleService getService() {
+		return service;
+	}
+
+	public void setService(ConsoleService service) {
+		this.service = service;
 	}
 }

@@ -6,19 +6,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import es.Victor.Assembler.VideogameAssembler;
 import es.Victor.Model.Videogame;
 import es.Victor.Service.VideogameService;
 
-public class DeleteVideogame extends HttpServlet {
+public class DeleteVideogameServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private VideogameService service = new VideogameService();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Videogame game = service.assembleUserFromRequest(req);
-		service.deleteVideogame(game);
-		loginRedirect(req, resp);
+		Videogame videogameToDelete = VideogameAssembler.assembleVideogameForm(req);
+		service.deleteVideogame(videogameToDelete);
+		listRedirect(req, resp);
 	}
 
 	@Override
@@ -27,15 +28,14 @@ public class DeleteVideogame extends HttpServlet {
 		confirmationRedirect(req, resp);
 	}
 
-	protected void confirmationRedirect(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("ConfirmationDeleteVideogame.jsp");
+	private void listRedirect(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/VideogameList.jsp");
 		dispatcher.forward(req, resp);
 	}
 
-	protected void loginRedirect(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("ListVideogame.jsp");
+	private void confirmationRedirect(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Confirmation.jsp");
 		dispatcher.forward(req, resp);
 	}
 }

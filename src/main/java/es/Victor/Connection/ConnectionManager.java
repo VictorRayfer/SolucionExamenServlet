@@ -1,18 +1,22 @@
 package es.Victor.Connection;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.List;
+import java.util.Optional;
+
+import es.Victor.Model.Console;
 
 public interface ConnectionManager {
 
 	public Connection open(String jdbcUrl);
 
-	public void close(Connection conn);
+	public void close(Connection connect);
 
-	public Connection executeSql(Connection conn, String sql);
+	void insert(Console console);
 
-	public void close(PreparedStatement prepareStatement);
+	Optional<Console> search(Console console);
 
-	public void close(ResultSet resultSet);
+	void update(Console console);
+
+	List<Console> listAllConsoles();
 }

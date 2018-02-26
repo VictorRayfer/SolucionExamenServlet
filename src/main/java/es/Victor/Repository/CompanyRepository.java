@@ -7,14 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import es.Victor.Connection.ConnectionManager;
+import es.Victor.Connection.AbstractConnection;
 import es.Victor.Connection.H2Connection;
 import es.Victor.Model.Company;
 
 public class CompanyRepository {
 
 	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'";
-	ConnectionManager manager = new H2Connection();
+	AbstractConnection manager = new H2Connection();
 
 	public void insertCompany(Company companyForm) {
 		Connection connect = manager.open(jdbcUrl);
